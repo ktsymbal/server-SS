@@ -1,13 +1,12 @@
-Connected to localhost:8088
+Connected to localhost:8097
 GET / HTTP/1.1
-Host: localhost:8088
+Host: localhost:8097
 User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
 Upgrade-Insecure-Requests: 1
-
 
 HTTP/1.1 200 OK
 Content-Type : text/html
@@ -16,56 +15,39 @@ Connection : close
 
 <h1> This is / </h1>
 Connection closed
-Connected to localhost:8088
+Connected to localhost:8097
 GET /favicon.ico HTTP/1.1
-Host: localhost:8088
+Host: localhost:8097
 User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0
 Accept: */*
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
 
-
 HTTP/1.1 404 Not Found
+Content-Type : text/html
 Content-Length : 22
 Connection : close 
 
 <h1>404 NOT FOUND</h1>Connection closed
-Connected to localhost:8088
+Connected to localhost:8097
 GET /favicon.ico HTTP/1.1
-Host: localhost:8088
+Host: localhost:8097
 User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
 
-
 HTTP/1.1 404 Not Found
+Content-Type : text/html
 Content-Length : 22
 Connection : close 
 
 <h1>404 NOT FOUND</h1>Connection closed
-Connected to localhost:8088
-POST / HTTP/1.1
-Host: localhost:8088
-User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-Content-Type: application/json
-Connection: keep-alive
-Content-Length: 0
-
-
-HTTP/1.1 405 Method Not Allowed
-Content-Length : 31
-Connection : close 
-
-<h1>405 Method Not Allowed</h1>Connection closed
-Connected to localhost:8088
-GET /f HTTP/1.1
-Host: localhost:8088
+Connected to localhost:8097
+GET /q HTTP/1.1
+Host: localhost:8097
 User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
 Accept-Language: en-US,en;q=0.5
@@ -73,8 +55,8 @@ Accept-Encoding: gzip, deflate
 Connection: keep-alive
 Upgrade-Insecure-Requests: 1
 
-
 HTTP/1.1 404 Not Found
+Content-Type : text/html
 Content-Length : 22
 Connection : close 
 
