@@ -10,7 +10,7 @@ class Server():
         self.s = socket.socket()
         self.log = Logger()
 
-    def recv_request(self, sock, timeout=2, delim='\r\n\r\n', bufsize=4096):
+    def recv_request(self, sock, timeout=5, delim='\r\n\r\n', bufsize=4096):
         '''
         :return: tuple (request, parsed_request)
         request is a string
@@ -28,7 +28,8 @@ class Server():
                 if rdata:
                     if delim in rdata:
                         pos_delim = rdata.find(delim)
-                        data += rdata[:pos_delim]
+                        data += rdata[:pos_delim + len(delim)]
+                        after_delimeter = ''
                         after_delimeter = rdata[pos_delim + len(delim):]
                         try:
                             request.parse_headers(data)
@@ -38,11 +39,13 @@ class Server():
                         parsed_request = request.get_parsed_request()
 
                         if ('Content-Length' in parsed_request.keys() and
-                             parsed_request['Content-Length'] > '0'):
-
-                            rdata = sock.recv(
-                            int(parsed_request['Content-Length']) - len(after_delim))
-                            request.parse_body(after_delim + rdata)
+                             parsed_request['Content-Length'].strip() > '0'):
+                            if int(parsed_request['Content-Length']) > len(after_delimeter):
+                                rdata = sock.recv(
+                                int(parsed_request['Content-Length']) - len(after_delimeter))
+                            else:
+                                rdata = ''
+                            request.parse_body(after_delimeter + rdata)
                         break
 
                     data += rdata
@@ -50,8 +53,7 @@ class Server():
                     time.sleep(0.1)
             return request
         except socket.timeout:
-            self.log.error_logger('Timeout')
-            sock.close()
+            raise
 
     def connection(self):
         self.s.bind((self.host, self.port))
@@ -70,6 +72,8 @@ class Server():
                 resp = response.process_request(req)
             except (BadRequest, NotFound, MethodNotAllowed) as e:
                 resp = response.generate_response(e.code)
+            except socket.timeout:
+                self.log.error_logger('Timeout\n')
             finally:
                 self.log.access_logger(resp)
                 self.log.access_logger('\nConnection closed\n\n')

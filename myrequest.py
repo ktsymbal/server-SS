@@ -1,7 +1,7 @@
 from server_exceptions import *
 import re
 
-METHODS = ('GET')
+METHODS = ('GET', 'POST', 'DELETE', 'PUT')
 
 class MyRequest():
     def __init__(self):
@@ -17,11 +17,9 @@ class MyRequest():
         return self.parsed_request
 
     def parse_headers(self, part_request):
-        print self.request
         self.request = part_request
 
         lines = part_request.split('\r\n')
-        print 'lines {}'.format(lines)
 
         if not lines[0]:
             raise BadRequest
@@ -40,17 +38,16 @@ class MyRequest():
         try:
             if not (re.match('HTTP/1.0|HTTP/1.1',
             self.parsed_request['version']) and len(self.parsed_request['version']) == 8):
-                print self.parsed_request['version']
-                print len(self.parsed_request['version'])
                 raise BadRequest
         except BadRequest:
             raise
 
         for header in lines[1:]:
-            header_split = header.split(':', 1)
-            self.parsed_request[header_split[0]] = header_split[1]
+            if header:
+                header_split = header.split(':', 1)
+                self.parsed_request[header_split[0]] = header_split[1]
 
-    def parse_body(body):
+    def parse_body(self, body):
         self.request += body
         self.parsed_request['body'] = body
 
