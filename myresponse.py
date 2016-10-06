@@ -136,30 +136,6 @@ class MyResponse():
         else:
             self.code = '400'
 
-    '''
-    def POST(self, parsed_request):
-        print 'in POST'
-        request_url = parsed_request['uri']
-        if request_url == '/file' and parsed_request['Content-Type'] and \
-            parsed_request['body']:
-            try:
-                boundary = '--{}--'.format(parsed_request['Content-Type'].split(';')[1].split('=')[1])
-            except:
-                self.code = '400'
-                self.body = make_body()
-            with open('file_upload' , 'wb')
-            parsed_body = cgi.FieldStorage()
-            print parsed_body
-            fields = []
-            file_itself = {}
-            for line in parsed_request['body']:
-                if line == boundary:
-                    field = {}
-                else:
-                    header = line.split(':', 1)
-    '''
-
-
     def get_file(self, request_url):
         if request_url == '/':
             return DOCS + 'index.html'

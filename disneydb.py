@@ -1,7 +1,6 @@
 import psycopg2
 import json
 
-
 DB = 'disneydb'
 USER = 'disney'
 PSWD = 'disneyforever'
@@ -69,13 +68,11 @@ def PUT(body_json, rec_id):
                     if not key in TABLE_KEYS:
                         raise psycopg2.DatabaseError('Wrong data format')
                     set_values += '{} = {}'.format(key, body_json[key])
-                    print set_values
                 cur.execute("""
                     UPDATE {} SET {} WHERE movieid = {}""".format(TABLE, set_values, rec_id)
                 )
                 conn.commit()
             except psycopg2.DatabaseError:
-                print "database error"
                 conn.rollback()
                 raise
 
