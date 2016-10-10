@@ -1,6 +1,7 @@
 import mimetypes
 import re
-import disneydb
+import disney
+from  session import Session
 import json
 
 DIR_URL = lambda dir : '^/{0}$|^/{0}/$'.format(dir)
@@ -68,12 +69,15 @@ class MyResponse():
 
         if re.match('/disney/*', request_url):
 
+            current_session = Session()
+            model = disney.Disney(current_session)
+
             if re.match(REC_URL('disney'), request_url):
                 id = int(re.findall(REC_URL('disney'), request_url)[0])
-                self.body = disneydb.GET(id)
+                self.body = model.GET(id)
 
             elif re.match(DIR_URL('disney'), request_url):
-                self.body = disneydb.GET_ALL()
+                self.body = model.GET_ALL()
 
             if self.body:
                 self.content_type = ('application/json', None)
@@ -102,35 +106,46 @@ class MyResponse():
 
         if re.match(DIR_URL('disney'), request_url):
             try:
+
+                current_session = Session()
+                model = disney.Disney(current_session)
+
                 insertion = json.loads(parsed_request['body'])
-                if isinstance(insertion, list):
-                    disneydb.POST(insertion)
-                else:
-                    disneydb.POST(insertion)
+                print insertion
+                model.POST(insertion)
                 self.code = '200'
             except:
                 self.code = '400'
+                raise
 
     def PUT(self, parsed_request):
         request_url = parsed_request['uri']
         try:
             if re.match(REC_URL('disney'), request_url):
-                print "match"
+
+                current_session = Session()
+                model = disney.Disney(current_session)
+
                 id = int(re.findall(REC_URL('disney'), request_url)[0])
                 update = json.loads(parsed_request['body'])
-                disneydb.PUT(update, id)
+                model.PUT(id, update)
                 self.code = '200'
             else:
                 raise BadRequest
         except:
             self.code = '400'
+            raise
 
     def DELETE (self, parsed_request):
         request_url = parsed_request['uri']
 
         if re.match(REC_URL('disney'), request_url):
+
+            current_session = Session()
+            model = disney.Disney(current_session)
+
             id = int(re.findall(REC_URL('disney'), request_url)[0])
-            disneydb.DELETE(id)
+            model.DELETE(id)
             self.code = '200'
 
         else:
